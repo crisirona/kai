@@ -28,4 +28,6 @@ urlpatterns = [
     path('kitchenall/',views.KitchenAll,name='kitchenAll'),
 
     path('ready/<int:comd_id>',views.Ready,name='ready'),
+
+    path('newbowl/',views.NewBowl,name='newbowl'),
 ]   

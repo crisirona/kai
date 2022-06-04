@@ -275,3 +275,10 @@ def registros(request):
         "sll":sll,
     }
     return render(request, 'core/registros.html',context)
+
+def NewBowl(request):
+    bf= BowlForm()
+    context={
+        "bf":bf
+    }
+    return render(request, 'core/newbowl.html',context)
