@@ -1,3 +1,6 @@
+<div class="container">
+    {% extends 'core/base.html' %}
+{% block content %}
 <div class="alert alert-primary" role="alert">
     <table class="table table-bordered">
       <thead>
@@ -30,7 +33,7 @@
       {% endif %}
         <tr>
           <th scope="row">Total:</th>
-          <td></td>
+          <th></th>
           <td colspan="2">$ {{total_carrito}}</td>
         </tr>
       </tbody>
@@ -39,9 +42,9 @@
     </div>
     <div class="row text-center">
         <div class="col-6"><a href="{% url 'CLS' %}" class="btn btn-danger">Limpiar</a></div>
-        <div class="col-6"><a href="{% url 'confirm' %}" class="btn btn-success">Guardar</a></div>
+        <div class="col-6"><a href="{% url 'tokitchen' %}" class="btn btn-success">Pasar a Cocina</a></div>
     </div>
+{% endblock content %}
 
-   
-    {% comment %} <a href="{% url 'Add' value.id 'hc'%}" class="badge btn btn-dark badge-dark">+</a>
-    <a href="{% url 'Sub' value.id %}" class="badge btn btn-dark badge-dark">-</a>     {% endcomment %}
+
+</div>

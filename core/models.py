@@ -101,6 +101,7 @@ class Bowl(models.Model):
     extra8 = models.ForeignKey(SalsaBowl, on_delete=models.CASCADE,null=True, blank=True,related_name='Kai.extra8+')
     extra9 = models.ForeignKey(SalsaBowl, on_delete=models.CASCADE,null=True, blank=True,related_name='Kai.extra9+')
     extra10 = models.ForeignKey(SalsaBowl, on_delete=models.CASCADE,null=True, blank=True,related_name='Kai.extra10+')
+    typ = models.CharField(max_length=50,default='b')
 
     def __str__(self):
         return str(self.id)
@@ -117,7 +118,7 @@ class VegetalesHandroll(models.Model):
     name = models.CharField(max_length=200)
     price = models.PositiveIntegerField()
     state = models.BooleanField(default=True)
-    
+
     def __str__(self):
         return self.name
 
@@ -128,9 +129,9 @@ class Handroll(models.Model):
     vegetal1 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='Handroll.vegetal1+')
     vegetal2 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='Handroll.vegetal2+')
     vegetal3 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='Handroll.vegetal3+')
-
+    typ = models.CharField(max_length=50,default='h')
     def __str__(self):
-        return self.name
+        return str(self.id)+typ
 
 class HandrollReady(models.Model):
     name = models.CharField(max_length=50)
@@ -140,7 +141,8 @@ class HandrollReady(models.Model):
     vegetal1 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='HandrollReady.vegetal1+')
     vegetal2 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='HandrollReady.vegatal2+')
     vegetal3 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='HandrollReady.vegetal3+')
-    
+    typ = models.CharField(max_length=50,default='hc')
+
     def __str__(self):
         return self.name
 
@@ -163,9 +165,10 @@ class AgregadoAlmuerzo(models.Model):
 class Almuerzo(models.Model):
     proteina = models.ForeignKey(ProteinaAlmuerzo, on_delete=models.CASCADE)
     agregado = models.ForeignKey(AgregadoAlmuerzo, on_delete=models.CASCADE)
+    typ = models.CharField(max_length=50,default='al')
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class QuesoDesayuno(models.Model):
@@ -194,16 +197,20 @@ class Desayuno(models.Model):
     proteina = models.ForeignKey(ProteinaDesayuno, on_delete=models.CASCADE)
     vegetal1 = models.ForeignKey(VegetalesDesayuno, on_delete=models.CASCADE,related_name='Desayuno.vegetal1+')
     vegetal2 = models.ForeignKey(VegetalesDesayuno, on_delete=models.CASCADE,related_name='Desayuno.vegetal2+')
+    typ = models.CharField(max_length=50,default='des')
     
     def __str__(self):
-        return self.id
+        return 'des '+str(self.id)
+
 class Selladitas(models.Model):
     name = models.CharField(max_length=50)
     price = models.PositiveIntegerField()
     state = models.BooleanField(default=True)
+    typ = models.CharField(max_length=50,default='sell')
 
     def __str__(self):
         return self.name
+
 class CorteKai(models.Model):
     num = models.PositiveIntegerField()
     envoltorio = models.CharField(max_length=50)
@@ -234,8 +241,29 @@ class Kai(models.Model):
     extra4 = models.ForeignKey(ExtraKai, on_delete=models.CASCADE,blank=True,null=True,related_name='Kai.extra4+')
     extra5 = models.ForeignKey(ExtraKai, on_delete=models.CASCADE,blank=True,null=True,related_name='Kai.extra5+')
     price = models.PositiveIntegerField()
+    typ = models.CharField(max_length=50,default='kai')
 
     def __str__(self):
         return self.name
 
 
+class Article(models.Model):
+    cod = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    total = models.CharField(max_length=50)
+    cantidad = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.cod
+
+class Comanda(models.Model):
+    cod = models.IntegerField(null=True, blank=True)
+    article = models.ManyToManyField(Article)
+    cooking = models.BooleanField(default=False)
+    time_to_kitchen = models.DateTimeField(null=True,blank=True)
+    finished = models.BooleanField(default=False)
+    time_finished = models.DateTimeField(null=True,blank=True)
+
+    
+    def __str__(self):
+        return str(self.cod)

@@ -24,5 +24,5 @@ admin.site.register(models.Desayuno)
 admin.site.register(models.Almuerzo)
 admin.site.register(models.AgregadoAlmuerzo)
 admin.site.register(models.ProteinaAlmuerzo)
-
-
+admin.site.register(models.Comanda)
+admin.site.register(models.Article)
