@@ -181,6 +181,8 @@ def Ready(request,comd_id):
     cmd.cooking=False
     cmd.finished=True
     cmd.time_finished= timezone.now()
+    #googlear request user
+    cmd.author=request.username
     cmd.save()
     return redirect("Tienda")
 
