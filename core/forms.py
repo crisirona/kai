@@ -1,9 +1,13 @@
 from django import forms
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from .models import Product, Bowl,Desayuno,Almuerzo,Handroll,HandrollReady
 
-class ProductForm(forms.ModelForm):
+#se define clase forms
+#se asigna tipo de objeto y declarar parametros del formulario
 
+
+class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ('name', 'price',)
@@ -36,11 +40,16 @@ class HandrollForm(forms.ModelForm):
 
 
 
-# admin.site.register(models.Handroll)
-# admin.site.register(models.ProteinaHandroll)
-# admin.site.register(models.VegetalesHandroll)
-# admin.site.register(models.HandrollReady)
-# admin.site.register(models.Kai)
-# admin.site.register(models.CorteKai)
-# admin.site.register(models.ExtraKai)
-# admin.site.register(models.Selladitas)
+class NewUserForm(UserCreationForm):
+	email = forms.EmailField(required=True)
+
+	class Meta:
+		model = User
+		fields = ("username", "email", "password1", "password2")
+
+	def save(self, commit=True):
+		user = super(NewUserForm, self).save(commit=False)
+		user.email = self.cleaned_data['email']
+		if commit:
+			user.save()
+		return user

@@ -14,10 +14,10 @@ class Producto(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField()
+    name = models.CharField(max_length=50)
     
     def __str__(self):
-        return self.title
+        return self.name
 
 
 class Pedido(models.Model):
@@ -141,6 +141,7 @@ class HandrollReady(models.Model):
     vegetal1 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='HandrollReady.vegetal1+')
     vegetal2 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='HandrollReady.vegatal2+')
     vegetal3 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='HandrollReady.vegetal3+')
+    price = models.PositiveIntegerField(default=0,null=True, blank=True)
     typ = models.CharField(max_length=50,default='hc')
 
     def __str__(self):
@@ -263,7 +264,8 @@ class Comanda(models.Model):
     time_to_kitchen = models.DateTimeField(null=True,blank=True)
     finished = models.BooleanField(default=False)
     time_finished = models.DateTimeField(null=True,blank=True)
-
+    author = models.ForeignKey(Profile,null=True, on_delete=models.CASCADE)
+    coments = models.TextField(null=True,blank=True)
     
     def __str__(self):
         return str(self.cod)

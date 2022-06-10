@@ -28,74 +28,91 @@
             <div class="row" style="padding:10px 0;">
                 <div class='col-12'>
                     <div class="row">
-                        {% for producto in productos %}
-                            <div class="col-6">
-                                <div class="card" style="height: 10rem; width: 23rem; margin: 5px 0px;">
+                            <div class="col-6 ">
+                                <div class="card " style="height: 15rem; width: 15rem; margin: 5px 0px;">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{producto.nombre}}</h5>
-                                        <p class="card-text">{{producto.categoria}}</p>
-                                        <p class="card-text">{{producto.precio}}</p>
-                                        <a href="{% url 'Add' producto.id %}" class="btn btn-primary">Agregar al carrito</a>
+                                        <div class="container flex-column d-flex justify-content-center">
+                                            <h3 class="card-title">Bowl</h3>
+                                        <p class="card-text">Proteina + Base</p>
+                                        <p class="card-text">2 Salsas</p>
+                                        <a href="{% url 'newbowl'%}" class="btn btn-primary">Ir</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
-                        {% for producto in hc %}
-                            <div class="col-6">
-                                <div class="card" style="height: 10rem; width: 23rem; margin: 5px 0px;">
-                                    <div class='container mt-3'><h4>Handroll Classic</h4></div>
+                            <div class="col-6 ">
+                                <div class="card " style="height: 15rem; width: 15rem; margin: 5px 0px;">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{producto.name}}</h5>
-                                        <a href="{% url 'Add' producto.id 'hc' %}" class="btn btn-primary">Agregar al carrito</a>
+                                        <div class="container flex-column d-flex justify-content-center">
+                                            <h3 class="card-title">HandoRoll</h3>
+                                        <p class="card-text">3 Rellenos</p>
+                                        <p class="card-text"> </p>
+                                        <a href="{% url 'newhandroll'%}" class="btn btn-primary">Ir</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
-                        {% for producto in al %}
-                            <div class="col-6">
-                                <div class="card" style="height: 10rem; width: 23rem; margin: 5px 0px;">
-                                    <div class='container mt-3'><h4>Almuerzos</h4></div>
+                            <div class="col-6 ">
+                                <div class="card " style="height: 15rem; width: 15rem; margin: 5px 0px;">
                                     <div class="card-body">
-                                        <p>{{producto.proteina}} - {{producto.agregado}}</p>
-                                        
-                                        <a href="{% url 'Add' producto.id 'al' %}" class="btn btn-primary">Agregar al carrito</a>
+                                        <div class="container flex-column d-flex justify-content-center">
+                                            <h3 class="card-title">Almuerzo</h3>
+                                        <p class="card-text">Carne</p>
+                                        <p class="card-text">Agrenado</p>
+                                        <a href="{% url 'newalmuerzo'%}" class="btn btn-primary">Ir</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
-                        {% for producto in b %}
-                            <div class="col-6">
-                                <div class="card" style="height: 10rem; width: 23rem; margin: 5px 0px;">
-                                    <div class='container mt-3'><h4>Bowls</h4></div>
+                            <div class="col-6 ">
+                                <div class="card " style="height: 15rem; width: 15rem; margin: 5px 0px;">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{producto.id}}</h5>
-                                        <a href="{% url 'Add' producto.id 'b' %}" class="btn btn-primary">Agregar al carrito</a>
+                                        <div class="container flex-column d-flex justify-content-center">
+                                            <h3 class="card-title">Desayuno</h3>
+                                        <p class="card-text">Queso + Proteina</p>
+                                        <p class="card-text">2 Vegetales</p>
+                                        <a href="{% url 'newdesayuno'%}" class="btn btn-primary">Ir</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
-                        {% for producto in des %}
-                            <div class="col-6">
-                                <div class="card" style="height: 10rem; width: 23rem; margin: 5px 0px;">
-                                    <div class='container mt-3'><h4>Desayunos</h4></div>
+                            <div class="col-6 ">
+                                <div class="card " style="height: 15rem; width: 15rem; margin: 5px 0px;">
                                     <div class="card-body">
-                                        <p>{{producto.queso}} - {{producto.proteina}} - {{producto.vegetal1}} - {{producto.vegetal2}}</p>
-                                        <a href="{% url 'Add' producto.id 'des' %}" class="btn btn-primary">Agregar al carrito</a>
+                                        <div class="container flex-column d-flex justify-content-center">
+                                            <h3 class="card-title">HandoRoll Classic</h3>
+                                        <p class="card-text">Seleccionar</p>
+                                        <p class="card-text"> </p>
+                                        <a href="{% url 'listhc'%}" class="btn btn-primary">Ir</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
-                        {% for producto in sell %}
-                            <div class="col-6">
-                                <div class="card" style="height: 10rem; width: 23rem; margin: 5px 0px;">
-                                    <div class='container mt-3'><h4>Selladitas</h4></div>
+                            <div class="col-6 ">
+                                <div class="card " style="height: 15rem; width: 15rem; margin: 5px 0px;">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{producto.id}}</h5>
-                                        <a href="{% url 'Add' producto.id 'sell' %}" class="btn btn-primary">Agregar al carrito</a>
+                                        <div class="container flex-column d-flex justify-content-center">
+                                            <h3 class="card-title">Kai</h3>
+                                        <p class="card-text">Seleccionar</p>
+                                        <p class="card-text"> </p>
+                                        <a href="{% url 'listkai'%}" class="btn btn-primary">Ir</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
+                            <div class="col-6 ">
+                                <div class="card " style="height: 15rem; width: 15rem; margin: 5px 0px;">
+                                    <div class="card-body">
+                                        <div class="container flex-column d-flex justify-content-center">
+                                            <h3 class="card-title">Selladitos</h3>
+                                        <p class="card-text">Seleccionar</p>
+                                        <p class="card-text"> </p>
+                                        <a href="{% url 'listsell'%}" class="btn btn-primary">Ir</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
                     </div>
                 </div>
             </div>
