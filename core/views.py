@@ -9,7 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 
 from .models import Product,Handroll,Article,Comanda,Selladitas,Desayuno,Almuerzo ,HandrollReady,Kai,Selladitas,Bowl
-from .forms import NewUserForm,ProductForm,BowlForm,DesayunoForm,AlmuerzoForm,HandrollForm
+from .forms import NewUserForm,ProductForm,BowlForm,DesayunoForm,AlmuerzoForm,HandrollForm, ComentForm
 from .Carrito import Carrito
 from django.shortcuts import (get_object_or_404,
 							render,
@@ -132,9 +132,15 @@ def ToKitchen(request):
             comd.save()
         #Cambia el estado de la ccmanda cuando pasa a cocina
         comd.cooking=True
+        form=ComentForm(request.POST or None)
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save(commit=True)
         #Asigna hora de paso a cocina
         comd.time_to_kitchen = timezone.now()
+        g=request.user.username
         comd.save()
+        print(g)
         #limpia carrito
         request.session["carrito"]={}
     else:
@@ -180,11 +186,9 @@ def Ready(request,comd_id):
     cmd = Comanda.objects.get(id=comd_id)
     cmd.cooking=False
     cmd.finished=True
-    cmd.time_finished= timezone.now()
-    #googlear request user
-    cmd.author=request.username
+    cmd.time_finished= timezone.now()    
     cmd.save()
-    return redirect("Tienda")
+    return print(request.user)
 
 
 #Listar productos

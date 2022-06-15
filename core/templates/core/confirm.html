@@ -43,7 +43,11 @@
     </div>
     <div class="row text-center">
         <div class="col-6"><a href="{% url 'CLS' %}" class="btn btn-danger">Limpiar</a></div>
-        <div class="col-6"><a href="{% url 'tokitchen' %}" class="btn btn-success">Pasar a Cocina</a></div>
+        <div class="col-6"><a href="{% url 'tokitchen' %}" class="btn btn-success" method="post">Pasar a Cocina</a></div>
+    </div>
+    <div class="container d-flex center mt-4">
+      <label for="coment">Comentarios: </label>
+      <textarea name="coment" id="coment" cols="50" rows="5"></textarea>
     </div>
 {% endblock content %}
 

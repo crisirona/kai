@@ -1,7 +1,9 @@
 from django.contrib import admin
 
+#se importan los modelos del directorio actual
 from . import models
 
+#se registran los modelos en el admin de django
 admin.site.register(models.Producto)
 admin.site.register(models.Product)
 admin.site.register(models.Bowl)

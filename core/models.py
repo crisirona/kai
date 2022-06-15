@@ -3,7 +3,8 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-# Create your models here.
+#se crean clases para cada entidad de la base de datos, declarando atributos y tipo de datos
+#tambien se definen funciones para cada modelo. __str__ es funcion para darle nombre (como un string)
 class Producto(models.Model):
     nombre = models.CharField(max_length=64)
     categoria = models.CharField(max_length=32)
@@ -14,7 +15,7 @@ class Producto(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50,null=True)
     
     def __str__(self):
         return self.name
@@ -102,6 +103,7 @@ class Bowl(models.Model):
     extra9 = models.ForeignKey(SalsaBowl, on_delete=models.CASCADE,null=True, blank=True,related_name='Kai.extra9+')
     extra10 = models.ForeignKey(SalsaBowl, on_delete=models.CASCADE,null=True, blank=True,related_name='Kai.extra10+')
     typ = models.CharField(max_length=50,default='b')
+    time = models.PositiveIntegerField(null=True)
 
     def __str__(self):
         return str(self.id)
@@ -130,6 +132,8 @@ class Handroll(models.Model):
     vegetal2 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='Handroll.vegetal2+')
     vegetal3 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='Handroll.vegetal3+')
     typ = models.CharField(max_length=50,default='h')
+    time = models.PositiveIntegerField(null=True)
+
     def __str__(self):
         return str(self.id)+typ
 
@@ -143,6 +147,7 @@ class HandrollReady(models.Model):
     vegetal3 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='HandrollReady.vegetal3+')
     price = models.PositiveIntegerField(default=0,null=True, blank=True)
     typ = models.CharField(max_length=50,default='hc')
+    time = models.PositiveIntegerField(null=True)
 
     def __str__(self):
         return self.name
@@ -167,6 +172,7 @@ class Almuerzo(models.Model):
     proteina = models.ForeignKey(ProteinaAlmuerzo, on_delete=models.CASCADE)
     agregado = models.ForeignKey(AgregadoAlmuerzo, on_delete=models.CASCADE)
     typ = models.CharField(max_length=50,default='al')
+    time = models.PositiveIntegerField(null=True)
 
     def __str__(self):
         return str(self.id)
@@ -199,7 +205,8 @@ class Desayuno(models.Model):
     vegetal1 = models.ForeignKey(VegetalesDesayuno, on_delete=models.CASCADE,related_name='Desayuno.vegetal1+')
     vegetal2 = models.ForeignKey(VegetalesDesayuno, on_delete=models.CASCADE,related_name='Desayuno.vegetal2+')
     typ = models.CharField(max_length=50,default='des')
-    
+    time = models.PositiveIntegerField(null=True)
+
     def __str__(self):
         return 'des '+str(self.id)
 
@@ -208,6 +215,7 @@ class Selladitas(models.Model):
     price = models.PositiveIntegerField()
     state = models.BooleanField(default=True)
     typ = models.CharField(max_length=50,default='sell')
+    time = models.PositiveIntegerField(null=True)
 
     def __str__(self):
         return self.name
@@ -243,6 +251,7 @@ class Kai(models.Model):
     extra5 = models.ForeignKey(ExtraKai, on_delete=models.CASCADE,blank=True,null=True,related_name='Kai.extra5+')
     price = models.PositiveIntegerField()
     typ = models.CharField(max_length=50,default='kai')
+    time = models.PositiveIntegerField(null=True)
 
     def __str__(self):
         return self.name
@@ -253,6 +262,7 @@ class Article(models.Model):
     name = models.CharField(max_length=50)
     total = models.CharField(max_length=50)
     cantidad = models.CharField(max_length=50)
+    time = models.PositiveIntegerField(null=True)
 
     def __str__(self):
         return self.cod
@@ -264,8 +274,10 @@ class Comanda(models.Model):
     time_to_kitchen = models.DateTimeField(null=True,blank=True)
     finished = models.BooleanField(default=False)
     time_finished = models.DateTimeField(null=True,blank=True)
-    author = models.ForeignKey(Profile,null=True, on_delete=models.CASCADE)
+    author = models.CharField(max_length=50,null=True,blank=True)
+    time = models.PositiveIntegerField(null=True)
+    
     coments = models.TextField(null=True,blank=True)
     
     def __str__(self):
-        return str(self.cod)
+        return str(self.id)

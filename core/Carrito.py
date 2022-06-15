@@ -1,3 +1,6 @@
+#Se crea clase carrito con su iniciador en donde, en la sesion actual, busca un carrito, si no existe
+#lo crea y si ya existe lo define
+
 class Carrito:
     def __init__(self, request):
         self.request = request
@@ -9,6 +12,7 @@ class Carrito:
         else:
             self.carrito = carrito
 
+#se define funcion agregar, en donde, segun su tipo asigna los atributos del producto en un diccionario
     def agregar(self, producto):
         if producto.typ =='hc':
             id = 'hc'+str(producto.id)
@@ -109,20 +113,22 @@ class Carrito:
             self.guardar_carrito()
             
         else:
-            print('sss')
+            print('tipo de producto no reconocido')
  
         
-
+#funcion gardar carrito
     def guardar_carrito(self):
         self.session["carrito"] = self.carrito
         self.session.modified = True
 
+#funcion eliminar carrito
     def eliminar(self, producto):
         id = str(producto.id)
         if id in self.carrito:
             del self.carrito[id]
             self.guardar_carrito()
 
+#funcion restar cantidad de producto, si cantidad es menor o igual a 0 se elimina el carrito
     def restar(self, producto):
         id = str(producto.id)
         if id in self.carrito.keys():
@@ -131,6 +137,7 @@ class Carrito:
             if self.carrito[id]["cantidad"] <= 0: self.eliminar(producto)
             self.guardar_carrito()
 
+#funcion limpiar carrito
     def limpiar(self):
         self.session["carrito"] = {}
         self.session.modified = True
