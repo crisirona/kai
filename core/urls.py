@@ -47,4 +47,4 @@ urlpatterns = [
     path('nuevoproducto/', views.NuevoProducto, name='newproduct'),
     path('modificarproducto/<int:id>', views.Update, name='updateproduct'),
     path('eliminarproducto/<int:id>', views.EliminarProducto, name='deleteproduct'),
-]   
+]   +static(settings.STATIC_URL, document_root=settings.STATIS_ROOT)
