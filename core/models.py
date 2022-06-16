@@ -57,7 +57,7 @@ class Cajero(models.Model):
 
 class ProteinaBowl(models.Model):
     name = models.CharField(max_length=200)
-    price = models.PositiveIntegerField()
+    price = models.PositiveIntegerField(null=True)
     state = models.BooleanField(default=True)
     
     def __str__(self):
@@ -65,7 +65,6 @@ class ProteinaBowl(models.Model):
 
 class BaseBowl(models.Model):
     name = models.CharField(max_length=200)
-    price = models.PositiveIntegerField()
     state = models.BooleanField(default=True)
     
     def __str__(self):
@@ -73,7 +72,6 @@ class BaseBowl(models.Model):
 
 class SalsaBowl(models.Model):
     name = models.CharField(max_length=200)
-    price = models.PositiveIntegerField()
     state = models.BooleanField(default=True)
     
     def __str__(self):
@@ -81,7 +79,7 @@ class SalsaBowl(models.Model):
 
 class ExtraBowl(models.Model):
     name = models.CharField(max_length=200)
-    price = models.PositiveIntegerField()
+    price = models.PositiveIntegerField(null=True)
     state = models.BooleanField(default=True)
     
     def __str__(self):
@@ -102,6 +100,7 @@ class Bowl(models.Model):
     extra8 = models.ForeignKey(SalsaBowl, on_delete=models.CASCADE,null=True, blank=True,related_name='Kai.extra8+')
     extra9 = models.ForeignKey(SalsaBowl, on_delete=models.CASCADE,null=True, blank=True,related_name='Kai.extra9+')
     extra10 = models.ForeignKey(SalsaBowl, on_delete=models.CASCADE,null=True, blank=True,related_name='Kai.extra10+')
+    state = models.BooleanField(default=True)    
     typ = models.CharField(max_length=50,default='b')
     time = models.PositiveIntegerField(null=True)
 
@@ -110,7 +109,6 @@ class Bowl(models.Model):
 
 class ProteinaHandroll(models.Model):
     name = models.CharField(max_length=200)
-    price = models.PositiveIntegerField()
     state = models.BooleanField(default=True)
     
     def __str__(self):
@@ -118,7 +116,6 @@ class ProteinaHandroll(models.Model):
 
 class VegetalesHandroll(models.Model):
     name = models.CharField(max_length=200)
-    price = models.PositiveIntegerField()
     state = models.BooleanField(default=True)
 
     def __str__(self):
@@ -131,6 +128,7 @@ class Handroll(models.Model):
     vegetal1 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='Handroll.vegetal1+')
     vegetal2 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='Handroll.vegetal2+')
     vegetal3 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='Handroll.vegetal3+')
+    state = models.BooleanField(default=True)    
     typ = models.CharField(max_length=50,default='h')
     time = models.PositiveIntegerField(null=True)
 
@@ -145,6 +143,7 @@ class HandrollReady(models.Model):
     vegetal1 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='HandrollReady.vegetal1+')
     vegetal2 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='HandrollReady.vegatal2+')
     vegetal3 =models.ForeignKey(VegetalesHandroll, on_delete=models.CASCADE, null=True, blank=True,related_name='HandrollReady.vegetal3+')
+    state = models.BooleanField(default=True)    
     price = models.PositiveIntegerField(default=0,null=True, blank=True)
     typ = models.CharField(max_length=50,default='hc')
     time = models.PositiveIntegerField(null=True)
@@ -154,7 +153,6 @@ class HandrollReady(models.Model):
 
 class ProteinaAlmuerzo(models.Model):
     name = models.CharField(max_length=200)
-    price = models.PositiveIntegerField()
     state = models.BooleanField(default=True)
     
     def __str__(self):
@@ -162,7 +160,6 @@ class ProteinaAlmuerzo(models.Model):
 
 class AgregadoAlmuerzo(models.Model):
     name = models.CharField(max_length=200)
-    price = models.PositiveIntegerField()
     state = models.BooleanField(default=True)
     
     def __str__(self):
@@ -173,6 +170,9 @@ class Almuerzo(models.Model):
     agregado = models.ForeignKey(AgregadoAlmuerzo, on_delete=models.CASCADE)
     typ = models.CharField(max_length=50,default='al')
     time = models.PositiveIntegerField(null=True)
+    price = models.PositiveIntegerField(null=True)
+    state = models.BooleanField(default=True)
+
 
     def __str__(self):
         return str(self.id)
@@ -204,6 +204,7 @@ class Desayuno(models.Model):
     proteina = models.ForeignKey(ProteinaDesayuno, on_delete=models.CASCADE)
     vegetal1 = models.ForeignKey(VegetalesDesayuno, on_delete=models.CASCADE,related_name='Desayuno.vegetal1+')
     vegetal2 = models.ForeignKey(VegetalesDesayuno, on_delete=models.CASCADE,related_name='Desayuno.vegetal2+')
+    state = models.BooleanField(default=True)
     typ = models.CharField(max_length=50,default='des')
     time = models.PositiveIntegerField(null=True)
 
@@ -212,7 +213,7 @@ class Desayuno(models.Model):
 
 class Selladitas(models.Model):
     name = models.CharField(max_length=50)
-    price = models.PositiveIntegerField()
+    price = models.PositiveIntegerField(null=True)
     state = models.BooleanField(default=True)
     typ = models.CharField(max_length=50,default='sell')
     time = models.PositiveIntegerField(null=True)
@@ -249,7 +250,7 @@ class Kai(models.Model):
     extra3 = models.ForeignKey(ExtraKai, on_delete=models.CASCADE,blank=True,null=True,related_name='Kai.extra3+')
     extra4 = models.ForeignKey(ExtraKai, on_delete=models.CASCADE,blank=True,null=True,related_name='Kai.extra4+')
     extra5 = models.ForeignKey(ExtraKai, on_delete=models.CASCADE,blank=True,null=True,related_name='Kai.extra5+')
-    price = models.PositiveIntegerField()
+    price = models.PositiveIntegerField(null=True)
     typ = models.CharField(max_length=50,default='kai')
     time = models.PositiveIntegerField(null=True)
 

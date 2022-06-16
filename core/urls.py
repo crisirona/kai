@@ -18,6 +18,7 @@ urlpatterns = [
     path('listahc/', views.ListaHC, name='listhc'),
     path('listakai/', views.ListaKai, name='listkai'),
     path('listasell/', views.ListaSell, name='listsell'),
+    path('listacomd/', views.ListaComd, name='listcomd'),
 
     #formularios
     path('registros/',views.registros,name='registros'),

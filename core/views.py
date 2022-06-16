@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .models import Product,Handroll,Article,Comanda,Selladitas,Desayuno,Almuerzo ,HandrollReady,Kai,Selladitas,Bowl
 from .forms import NewUserForm,ProductForm,BowlForm,DesayunoForm,AlmuerzoForm,HandrollForm, ComentForm
@@ -15,6 +16,8 @@ from django.shortcuts import (get_object_or_404,
 							render,
 							HttpResponseRedirect)
 from django.db.models import Q
+
+
 
 def tienda(request):
     #Se obtiene todos los objetos de cada tipp=o
@@ -58,7 +61,9 @@ def tienda(request):
     #Se retorna un render del template correspondiente a la ruta y le pasa el contexto
     return render(request, "core/tienda.html",context)
 
+
 #Funcion agregar que tiene como parametro id y tipo del objeto
+@login_required
 def agregar_producto(request, producto_id,typ):
     #Se obtiene el carrito
     carrito = Carrito(request)
@@ -86,33 +91,30 @@ def agregar_producto(request, producto_id,typ):
     return redirect("Tienda")
 
 #Funciones que ejecutan funciones de Carrito.py
+@login_required
 def eliminar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = Product.objects.get(id=producto_id)
     carrito.eliminar(producto)
     return redirect("Tienda")
-
+@login_required
 def restar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = Product.objects.get(id=producto_id)
     carrito.restar(producto)
     return redirect("Tienda")
 
-# def restar_handclassic(request, producto_id):
-#     carrito = Carrito(request)
-#     producto = HandrollReady.objects.get(id=producto_id)
-#     carrito.restar_hc(producto)
-#     return redirect("Tienda")
 
+@login_required
 def limpiar_carrito(request):
     carrito = Carrito(request)
     carrito.limpiar()
     return redirect("Tienda")
 
-
+@login_required
 def Confirm(request):
     return render(request, 'core/confirm.html')
-
+@login_required
 def ToKitchen(request):
     #Generar una comanda
     comd = Comanda()
@@ -148,6 +150,7 @@ def ToKitchen(request):
 
     return redirect("Tienda")
       
+@login_required
 def Kitchen(request):
     cmd = Comanda.objects.all()
     artcl = Article.objects.all()
@@ -165,6 +168,7 @@ def Kitchen(request):
     }
     return render(request, 'core/kitchen.html',context)
 
+@login_required
 def KitchenAll(request):
     cmd = Comanda.objects.all()
     artcl = Article.objects.all()
@@ -182,16 +186,17 @@ def KitchenAll(request):
     }
     return render(request, 'core/kitchenall.html',context)
 
+@login_required
 def Ready(request,comd_id):
     cmd = Comanda.objects.get(id=comd_id)
     cmd.cooking=False
     cmd.finished=True
     cmd.time_finished= timezone.now()    
     cmd.save()
-    return print(request.user)
-
+    return redirect("confirm")
 
 #Listar productos
+@login_required
 def ListaProducto(request):
     p=Product.objects.all()
     context={
@@ -199,6 +204,7 @@ def ListaProducto(request):
     }
     return render(request, 'core/list_product.html',context)
 
+@login_required
 def ListaHC(request):
     p=HandrollReady.objects.all()
     context={
@@ -206,6 +212,7 @@ def ListaHC(request):
     }
     return render(request, 'core/list_hc.html',context)
 
+@login_required
 def ListaKai(request):
     p=Kai.objects.all()
     context={
@@ -213,6 +220,7 @@ def ListaKai(request):
     }
     return render(request, 'core/list_kai.html',context)
 
+@login_required
 def ListaSell(request):
     p=Selladitas.objects.all()
     context={
@@ -220,6 +228,7 @@ def ListaSell(request):
     }
     return render(request, 'core/list_sell.html',context)
 
+@login_required
 def NuevoProducto(request):
     p=Product.objects.all()
     form=ProductForm(request.POST or None)
@@ -239,7 +248,7 @@ def NuevoProducto(request):
     return render(request, 'core/new_product.html',context)
 
 
-
+@login_required
 def Update(request,id):
     context={
 
@@ -256,6 +265,8 @@ def Update(request,id):
     context["form"] = form
 
     return render(request, 'core/update_product.html',context)
+
+@login_required
 def EliminarProducto(request,id):
     # dictionary for initial data with
     # field names as keys
@@ -277,7 +288,7 @@ def EliminarProducto(request,id):
     
     return render(request, 'core/delete_product.html',context)
 
-
+@login_required
 def registros(request):
     bf= BowlForm()
     dsyn = DesayunoForm()
@@ -297,7 +308,7 @@ def registros(request):
     }
     return render(request, 'core/registros.html',context)
 
-
+@login_required
 def NewBowl(request):
     bf= BowlForm()
     form= BowlForm()
@@ -317,6 +328,7 @@ def NewBowl(request):
     }
     return render(request, 'core/newbowl.html',context)
 
+@login_required
 def NewAlmuerzo(request):
     form= AlmuerzoForm()
     form=AlmuerzoForm(request.POST or None)
@@ -334,7 +346,7 @@ def NewAlmuerzo(request):
     }
     return render(request, 'core/newalmuerzo.html',context)
 
-
+@login_required
 def NewHandroll(request):
     form= HandrollForm()
     form=HandrollForm(request.POST or None)
@@ -352,7 +364,7 @@ def NewHandroll(request):
     }
     return render(request, 'core/newhandroll.html',context)
 
-
+@login_required
 def NewDesayuno(request):
     form= DesayunoForm()
     form=DesayunoForm(request.POST or None)
@@ -409,3 +421,11 @@ def logout_request(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("/")
+
+
+def ListaComd(request):
+    comd = Comanda.objects.all()
+    context = {
+        "comd":comd,
+    }
+    return render(request,'core/list_comd.html',context)

@@ -48,7 +48,7 @@ class Carrito:
                 self.carrito[id]={
                     "producto_id": id,
                     "nombre": 'al '+ str(producto.id),
-                    "acumulado": 1000,
+                    "acumulado": producto.price,
                     "cantidad": 1,
                 }
             else:
