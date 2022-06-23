@@ -10,6 +10,7 @@ urlpatterns = [
 
     #path con render de template
 
+    path('menu/',views.menu,name="menu"),
 
     path('', views.tienda, name="Tienda"),
     path('confirm/',views.Confirm,name='confirm'),
@@ -19,12 +20,14 @@ urlpatterns = [
     path('listakai/', views.ListaKai, name='listkai'),
     path('listasell/', views.ListaSell, name='listsell'),
     path('listacomd/', views.ListaComd, name='listcomd'),
+    path('listaisum/', views.ListaInsumos, name='listinsum'),
 
     #formularios
     path('registros/',views.registros,name='registros'),
     path('newbowl/',views.NewBowl,name='newbowl'),
     path('newalmuerzo/',views.NewAlmuerzo,name='newalmuerzo'),
     path('newhandroll/',views.NewHandroll,name='newhandroll'),
+    path('newhcclassic/',views.NewHandrollClassic,name='newhcclassic'),
     path('newdesayuno/',views.NewDesayuno,name='newdesayuno'),
 
 
@@ -34,14 +37,28 @@ urlpatterns = [
     path('agregar/<int:producto_id>/<str:typ>/', views.agregar_producto, name="Add"),
     path('eliminar/<int:producto_id>/', views.eliminar_producto, name="Del"),
     path('restar/<int:producto_id>/', views.restar_producto, name="Sub"),
-    #path('restarhc/<int:producto_id>/', views.restar_producto, name="SubHC"),
     path('limpiar/', views.limpiar_carrito, name="CLS"),  
     path('tokitchen/',views.ToKitchen,name='tokitchen'),
     path('ready/<int:comd_id>',views.Ready,name='ready'),
-
+    
+    path('updatecomd/<int:id>',views.updateComd,name='updatecomd'),
+    
+    path('changestatepb/<int:id>',views.changeStatePB,name='cgstatepb'),
+    path('changestatepa/<int:id>',views.changeStatePA,name='cgstatepa'),
+    path('changestatepd/<int:id>',views.changeStatePD,name='cgstatepd'),
+    path('changestateph/<int:id>',views.changeStatePH,name='cgstateph'),
+    path('changestatebb/<int:id>',views.changeStateBB,name='cgstatebb'),
+    path('changestatesd/<int:id>',views.changeStateSB,name='cgstatesb'),
+    path('changestateeb/<int:id>',views.changeStateEB,name='cgstateeb'),
+    path('changestatevh/<int:id>',views.changeStateVH,name='cgstatevh'),
+    path('changestateaa/<int:id>',views.changeStateAA,name='cgstateaa'),
+    path('changestateqd/<int:id>',views.changeStateQD,name='cgstateqd'),
+    path('changestatevd/<int:id>',views.changeStateVD,name='cgstatevd'),
+    
+    
     path("register/", views.register_request, name="register"),
     path("login/", views.login_request, name="login"),
-   path("logout", views.logout_request, name= "logout"),
+    path("logout", views.logout_request, name= "logout"),
    
     #no se estan usando
     path('listaproducto/', views.ListaProducto, name='listproduct'),

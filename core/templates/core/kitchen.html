@@ -15,8 +15,10 @@
                  {% if  place.cooking  %}Estado:
                                     En concina
                                 {% endif %}<br/>
-                Pedidos: <br/>{% for area in place.article.all %}- {{ area }}<br/>{% endfor %}
-           
+                Pedidos: <br/>{% for area in place.article.all %}- {{ area }}<br/>
+                {% endfor %}
+                Comentario {{place.coments}}<br/>
+
         </div>
         <a href="{% url 'ready' place.id%}" class="btn btn-warning">Ready</a>
       </div>

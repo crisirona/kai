@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Product, Bowl,Desayuno,Almuerzo,Handroll,HandrollReady, Comanda
+from .models import Product, Bowl,Desayuno,Almuerzo,Handroll,HandrollReady, Comanda,Kai
 
 #se define clase forms
 #se asigna tipo de objeto y declarar parametros del formulario
@@ -39,11 +39,18 @@ class HandrollForm(forms.ModelForm):
         fields = ('proteina1','proteina2','proteina3','vegetal1','vegetal2','vegetal3')
 
 
+class HandrollClassicForm(forms.ModelForm):
+
+    class Meta:
+        model = HandrollReady
+        fields = ('name','price','proteina1','proteina2','proteina3','vegetal1','vegetal2','vegetal3')
+
+
 class ComentForm(forms.ModelForm):
     
     class Meta:
         model = Comanda
-        fields = ('coments',)
+        fields = ('article','cooking','time_to_kitchen','finished','time_finished','author','time','coments',)
 
 class NewUserForm(UserCreationForm):
 	email = forms.EmailField(required=True)

@@ -25,7 +25,7 @@ class Carrito:
                 }
             else:
                 self.carrito[id]["cantidad"] += 1
-                self.carrito[id]["acumulado"] += 1000
+                self.carrito[id]["acumulado"] += producto.price
             self.guardar_carrito()
 
         elif producto.typ =='h':
@@ -48,12 +48,12 @@ class Carrito:
                 self.carrito[id]={
                     "producto_id": id,
                     "nombre": 'al '+ str(producto.id),
-                    "acumulado": producto.price,
+                    "acumulado":   producto.price,
                     "cantidad": 1,
                 }
             else:
                 self.carrito[id]["cantidad"] += 1
-                self.carrito[id]["acumulado"] += 1000
+                self.carrito[id]["acumulado"] += producto.price
             self.guardar_carrito()
 
         elif producto.typ =='b':
@@ -95,7 +95,7 @@ class Carrito:
                 }
             else:
                 self.carrito[id]["cantidad"] += 1
-                self.carrito[id]["acumulado"] += 1000
+                self.carrito[id]["acumulado"] += producto.price
             self.guardar_carrito()
 
         elif producto.typ =='sell':
@@ -109,7 +109,7 @@ class Carrito:
                 }
             else:
                 self.carrito[id]["cantidad"] += 1
-                self.carrito[id]["acumulado"] += 1000
+                self.carrito[id]["acumulado"] += producto.price
             self.guardar_carrito()
             
         else:

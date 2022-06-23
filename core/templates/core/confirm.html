@@ -47,7 +47,12 @@
     </div>
     <div class="container d-flex center mt-4">
       <label for="coment">Comentarios: </label>
-      <textarea name="coment" id="coment" cols="50" rows="5"></textarea>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="Submit">
+
+      </form>
     </div>
 {% endblock content %}
 

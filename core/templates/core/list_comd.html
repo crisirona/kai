@@ -4,20 +4,20 @@
     <table class="table table-striped table-dark">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
+            <th scope="col">Num</th>
+            <th scope="col">Tiempo a cocina</th>
+            <th scope="col">Hora entrega</th>
             <th scope="col">Handle</th>
           </tr>
         </thead>
         <tbody>
             {% for c in comd %}
             <tr>
-                <th scope="row">{{p.id}}</th>
-                <td>{{p.name}}</td>
-                <td>{{p.price}}</td>
-                <td><a class='btn btn-warning' href="{% url 'updateproduct' p.id %}">Modificar</a>
-                    <a  class='btn btn-danger' href="{% url 'deleteproduct' p.id%}">Eliminar</a></td>
+                <th scope="row">{{c.id}}</th>
+                <td>{{ c.time_to_kitchen }}</td>
+                <td>{{c.time_finished}}</td>
+                <td><a class='btn btn-warning' href="">Modificar</a>
+                    </td>
             </tr>
             {% endfor %}
         </tbody>
