@@ -15,6 +15,7 @@
                  {% if  place.cooking  %}Estado:
                                     En concina
                                 {% endif %}<br/>
+                Tiempo Estimado: {{place.time}}<br/>
                 Pedidos: <br/>{% for area in place.article.all %}- {{ area }}<br/>
                 {% endfor %}
                 Comentario {{place.coments}}<br/>

@@ -17,8 +17,10 @@ urlpatterns = [
     path('kitchen/',views.Kitchen,name='kitchen'),
     path('kitchenall/',views.KitchenAll,name='kitchenAll'),
     path('listahc/', views.ListaHC, name='listhc'),
+    path('listaal/', views.ListaAl, name='listal'),
     path('listakai/', views.ListaKai, name='listkai'),
     path('listasell/', views.ListaSell, name='listsell'),
+
     path('listacomd/', views.ListaComd, name='listcomd'),
     path('listaisum/', views.ListaInsumos, name='listinsum'),
 
@@ -29,7 +31,9 @@ urlpatterns = [
     path('newhandroll/',views.NewHandroll,name='newhandroll'),
     path('newhcclassic/',views.NewHandrollClassic,name='newhcclassic'),
     path('newdesayuno/',views.NewDesayuno,name='newdesayuno'),
+    #falta newkai
 
+    path('updatecomd/<int:id>',views.updateComd,name='updatecomd'),
 
     #ruta de funciones (sin rendear template)
 
@@ -41,7 +45,6 @@ urlpatterns = [
     path('tokitchen/',views.ToKitchen,name='tokitchen'),
     path('ready/<int:comd_id>',views.Ready,name='ready'),
     
-    path('updatecomd/<int:id>',views.updateComd,name='updatecomd'),
     
     path('changestatepb/<int:id>',views.changeStatePB,name='cgstatepb'),
     path('changestatepa/<int:id>',views.changeStatePA,name='cgstatepa'),
@@ -65,4 +68,11 @@ urlpatterns = [
     path('nuevoproducto/', views.NuevoProducto, name='newproduct'),
     path('modificarproducto/<int:id>', views.Update, name='updateproduct'),
     path('eliminarproducto/<int:id>', views.EliminarProducto, name='deleteproduct'),
+    
+
+    #lista modificar
+    path('listaupdatehc/', views.ListaUpdateHC, name='listupdatehc'),
+    path('updatehc/<int:id>', views.updateHC, name='updateHC'),
+    path('listaupdatekai/', views.ListaUpdateKai, name='listupdatekai'),
+    path('updatekai/<int:id>', views.updateKai, name='updateKai'),
 ]   

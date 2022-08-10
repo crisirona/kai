@@ -12,6 +12,14 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ('name', 'price',)
 
+class KaiForm(forms.ModelForm):
+    class Meta:
+        model = Kai
+        fields = ('name','corte1','corte2','corte3','corte4','corte5','corte6','corte7',
+        'extra1','extra2','extra3','extra4','extra5', 'price','time',)
+
+
+
 class BowlForm(forms.ModelForm):
 
     class Meta:
@@ -47,6 +55,13 @@ class HandrollClassicForm(forms.ModelForm):
 
 
 class ComentForm(forms.ModelForm):
+    
+    class Meta:
+        model = Comanda
+        fields = ('coments',)
+
+
+class ComdForm(forms.ModelForm):
     
     class Meta:
         model = Comanda

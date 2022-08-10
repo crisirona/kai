@@ -16,7 +16,7 @@
                 <th scope="row">{{c.id}}</th>
                 <td>{{ c.time_to_kitchen }}</td>
                 <td>{{c.time_finished}}</td>
-                <td><a class='btn btn-warning' href="">Modificar</a>
+                <td><a class='btn btn-warning' href="{% url 'updatecomd' c.id%}">Modificar</a>
                     </td>
             </tr>
             {% endfor %}

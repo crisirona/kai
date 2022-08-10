@@ -22,15 +22,24 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'Tienda' %}">Home</a>
           </li>
+          {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'kitchen' %}">Cocina</a>
           </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="{% url 'kitchenAll' %}">Todo</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown link
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'listcomd' %}">Lista Comanda</a>
+              <a class="dropdown-item" href="{% url 'listinsum' %}">Lista Insumos</a>
+            </div>
           </li>
+          {% endif %}
         </ul>
         
       </div>

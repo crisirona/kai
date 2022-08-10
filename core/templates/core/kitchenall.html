@@ -12,13 +12,15 @@
                 
                     Numero Comanda: {{ place.id }}<br/>
                     Author: {{ place.author }}<br/>
+                    Tiempo Estimado: {{place.time}}<br/>
                     Hora Comanda: {{ place.time_to_kitchen }}<br/>
+                    toiepo est: {{ place.toScns }}<br/>
                     Hora Entrega: {% if place.time_finished  %}
                                     {{ place.time_finished }}
                                 {% else %}
                                     No entregado
                                 {% endif %}<br/>
-                    Pedido: <br/>{% for area in place.article.all %}- {{ area }}<br/>{% endfor %}
+                    Pedido: <br/>{% for area in place.article.all %}- {{ area.cantidad }} x {{ area }}<br/>{% endfor %}
                
             </div>
           </div>

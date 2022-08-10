@@ -12,17 +12,32 @@ from django.contrib.auth.decorators import login_required
 from .models import Product, Handroll, Article, Comanda, Selladitas, Desayuno, Almuerzo, HandrollReady, Kai, Selladitas, Bowl
 from .models import ProteinaBowl,ProteinaAlmuerzo,ProteinaBowl,ProteinaDesayuno,ProteinaHandroll,BaseBowl,SalsaBowl,ExtraBowl
 from .models import VegetalesHandroll,AgregadoAlmuerzo,QuesoDesayuno,VegetalesDesayuno
+
 from .forms import NewUserForm, ProductForm, BowlForm, DesayunoForm, AlmuerzoForm, HandrollForm, ComentForm,HandrollClassicForm
+from .forms import ComdForm, KaiForm
 from .Carrito import Carrito
 from django.shortcuts import (get_object_or_404,
 							render,
 							HttpResponseRedirect)
 from django.db.models import Q
-
+from datetime import datetime
+from json import dumps
 def menu(request):
     return render(request,'menu/menu.html')
 
 def tienda(request):
+    #Insumos
+    probwl=ProteinaBowl.objects.all()
+    pa = ProteinaAlmuerzo.objects.all()
+    pd=ProteinaDesayuno.objects.all()
+    ph=ProteinaHandroll.objects.all()
+    bb=BaseBowl.objects.all()
+    sb=SalsaBowl.objects.all()
+    eb=ExtraBowl.objects.all()
+    vh= VegetalesHandroll.objects.all()
+    aa=AgregadoAlmuerzo.objects.all()
+    qd=QuesoDesayuno.objects.all()
+    vd=VegetalesDesayuno.objects.all()
     # Se obtiene todos los objetos de cada tipp=o
     productos = Product.objects.all()
     bowls = Bowl.objects.all()
@@ -59,7 +74,19 @@ def tienda(request):
         "hc": hc,
         "al": al,
         "des": des,
-        "sell": sell
+        "sell": sell,
+
+        "probwl":probwl,
+        "proal":pa,
+        "prodes":pd,
+        "prohand":ph,
+        "basebowl":bb,
+        "ssbowl":sb,
+        "extbowl":eb,
+        "vgthand":vh,
+        "agral":aa,
+        "qsdes":qd,
+        "bgtdes":vd
     }
     # Se retorna un render del template correspondiente a la ruta y le pasa el contexto
     return render(request, "core/tienda.html", context)
@@ -121,7 +148,12 @@ def limpiar_carrito(request):
 
 @login_required
 def Confirm(request):
-    form = ComentForm()
+    form = ComentForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+                a = form.save(commit=True)
+                comd.coments = a
+        return redirect('')
     context = {
         "form": form,
     }
@@ -132,6 +164,8 @@ def Confirm(request):
 def ToKitchen(request):
     # Generar una comanda
     comd = Comanda()
+    # definir un tiempo con valor inicial cero
+    tmp = 1
     # si hay items en el carrito entonces lo recorre
     if request.session["carrito"].items:
         for key, value in request.session["carrito"].items():
@@ -146,9 +180,16 @@ def ToKitchen(request):
             # agrega el articulo en la comanda
             comd.article.add(article)
             comd.save()
+            #si tiempo del producto es menor al tmp lo reemplaza. Si n0, suma 1
+            if value["tiempo"]>tmp:
+                tmp=value["tiempo"]
+            else:
+                tmp = tmp + 1
+
         # Cambia el estado de la ccmanda cuando pasa a cocina
         comd.cooking = True
-
+        #asigna tiempo a comanda
+        comd.time = tmp
 
         form = ComentForm(request.POST or None)
         if request.method == 'POST':
@@ -222,7 +263,7 @@ def ListaProducto(request):
     context={
         "product":p,
     }
-    return render(request, 'core/list_product.html',context)
+    return render(request, 'core/list/list_product.html',context)
 
 @login_required
 def ListaHC(request):
@@ -230,7 +271,15 @@ def ListaHC(request):
     context={
         "product":p,
     }
-    return render(request, 'core/list_hc.html',context)
+    return render(request, 'core/list/list_hc.html',context)
+
+@login_required
+def ListaAl(request):
+    p=Almuerzo.objects.all()
+    context={
+        "product":p,
+    }
+    return render(request, 'core/list/list_al.html',context)
 
 @login_required
 def ListaKai(request):
@@ -238,7 +287,7 @@ def ListaKai(request):
     context={
         "product":p,
     }
-    return render(request, 'core/list_kai.html',context)
+    return render(request, 'core/list/list_kai.html',context)
 
 @login_required
 def ListaSell(request):
@@ -246,7 +295,7 @@ def ListaSell(request):
     context={
         "product":p,
     }
-    return render(request, 'core/list_sell.html',context)
+    return render(request, 'core/list/list_sell.html',context)
 
 @login_required
 def NuevoProducto(request):
@@ -265,7 +314,7 @@ def NuevoProducto(request):
         "product":p,
         "form":form,
     }
-    return render(request, 'core/new_product.html',context)
+    return render(request, 'core/new/new_product.html',context)
 
 
 @login_required
@@ -346,7 +395,7 @@ def NewBowl(request):
         "bf":bf,
         "form":form,
     }
-    return render(request, 'core/newbowl.html',context)
+    return render(request, 'core/new/newbowl.html',context)
 
 @login_required
 def NewAlmuerzo(request):
@@ -364,7 +413,7 @@ def NewAlmuerzo(request):
     context={
         "form":form,
     }
-    return render(request, 'core/newalmuerzo.html',context)
+    return render(request, 'core/new/newalmuerzo.html',context)
 
 @login_required
 def NewHandroll(request):
@@ -382,7 +431,7 @@ def NewHandroll(request):
     context={
         "form":form,
     }
-    return render(request, 'core/newhandroll.html',context)
+    return render(request, 'core/new/newhandroll.html',context)
 
 @login_required
 def NewHandrollClassic(request):
@@ -400,7 +449,7 @@ def NewHandrollClassic(request):
     context={
         "form":form,
     }
-    return render(request, 'core/newhcclassic.html',context)
+    return render(request, 'core/new/newhcclassic.html',context)
 
 
 @login_required
@@ -419,7 +468,7 @@ def NewDesayuno(request):
     context={
         "form":form,
     }
-    return render(request, 'core/newdesayuno.html',context)
+    return render(request, 'core/new/newdesayuno.html',context)
 
 
 
@@ -647,7 +696,7 @@ def ListaInsumos(request):
         "qsdes":qd,
         "bgtdes":vd
     }
-    return render(request,'core/list_insum.html',context)
+    return render(request,'core/list/list_insum.html',context)
 
 
 def ListaComd(request):
@@ -655,17 +704,68 @@ def ListaComd(request):
     context = {
         "comd":comd,
     }
-    return render(request,'core/list_comd.html',context)
+    return render(request,'core/list/list_comd.html',context)
 
 def updateComd(request,id):
     comd = Comanda.objects.get(id=id)
-    form = ComentForm(instance=comd)
+    form = ComdForm(instance=comd)
     if request.method == "POST":
-        form = ComentForm(request.POST, instance=comd)
+        form = ComdForm(request.POST, instance=comd)
         if form.is_valid():
-            form.save()
-            return redirect ('listcomd')
+            a=form.save(commit=True)
+
+            return HttpResponseRedirect("/listacomd/")
+    else:
+        form = ComdForm(instance=comd)
     context = {
         "form":form,
     }
     return render(request,'core/updatecomd.html',context)
+
+def updateHC(request,id):
+    hc = HandrollReady.objects.get(id=id)
+    form = HandrollClassicForm(instance=hc)
+    if request.method == "POST":
+        form = HandrollClassicForm(request.POST, instance=hc)
+        if form.is_valid():
+            a=form.save(commit=True)
+
+            return HttpResponseRedirect("/listaupdatehc/")
+    else:
+        form = HandrollClassicForm(instance=hc)
+    context = {
+        "form":form,
+    }
+    return render(request,'core/update/updatehc.html',context)
+
+@login_required
+def ListaUpdateHC(request):
+    p=HandrollReady.objects.all()
+    context={
+        "product":p,
+    }
+    return render(request, 'core/update/listupdatehc.html',context)
+
+def updateKai(request,id):
+    kai = Kai.objects.get(id=id)
+    form = KaiForm(instance=kai)
+    if request.method == "POST":
+        form = KaiForm(request.POST, instance=kai)
+        if form.is_valid():
+            a=form.save(commit=True)
+
+            return HttpResponseRedirect("/listaupdatehc/")
+    else:
+        form = KaiForm(instance=kai)
+    context = {
+        "form":form,
+    }
+    return render(request,'core/update/updatekai.html',context)
+
+@login_required
+def ListaUpdateKai(request):
+    p=Kai.objects.all()
+    context={
+        "product":p,
+    }
+    return render(request, 'core/update/listupdatekai.html',context)
